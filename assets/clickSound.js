@@ -2,14 +2,14 @@
 
 let introPlayed = false;
 
-// --- Play intro sound once after first interaction ---
+//play the intro gong
 document.addEventListener('click', () => {
   if (!introPlayed) {
     introPlayed = true;
     const intro = new Audio('/assets/intro.mp3');
     intro.volume = 0;
     intro.play().then(() => {
-      // Fade in over 3 seconds
+      //fade in 
       const fadeDuration = 3000;
       const stepTime = 100;
       const volumeStep = 0.5 / (fadeDuration / stepTime);
@@ -23,7 +23,7 @@ document.addEventListener('click', () => {
     }).catch(err => console.log("Intro play blocked:", err));
   }
 
-  // --- Play gong sound on every click ---
+  //play the gong for every click 
   const gong = new Audio('/assets/gong.mp3');
   gong.volume = 0.3;
   gong.play().catch(err => {
