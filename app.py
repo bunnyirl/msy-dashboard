@@ -30,73 +30,147 @@ incomePlot = createRevenuePlot(month_sources)
  topRevenueCatsPlot) = createOctoberPlots()
 
 
-# WEBSITE LAYOUT
-app.layout = [html.Div([
-    # Header
-    html.H1("Mai Shan Yun Dashboard"),
+# --- WEBSITE LAYOUT (MODIFIED FOR SIDE-BY-SIDE GRAPHS) ---
+app.layout = html.Div(
+    style={'fontFamily': 'Visby Round, sans-serif', 'padding': '20px', 'backgroundColor': '#f4f4f9'},
+    children=[
 
-    # Dropdown for month selection for the revenue graph
-    dcc.Dropdown(
-        id='month-dropdown',
-        options=[
-            {'label': 'All Months', 'value': 'all'},
-            {'label': 'May', 'value': 'may'},
-            {'label': 'June', 'value': 'june'},
-            {'label': 'July', 'value': 'july'},
-            {'label': 'August', 'value': 'august'},
-            {'label': 'September', 'value': 'september'},
-            {'label': 'October', 'value': 'october'}
-        ],
-        value='all',  # default value
-        clearable=False
-    ),
-    dcc.Graph(id="income-plot", figure=incomePlot),
+        html.H1(),
+
+        #this Div will be controlled by assets/style.css and assets/script.js
+        html.Div([
+            #add the logo using html.Img.
+            html.Img(
+                src='/assets/麦_画板-1.png',
+                id='app-logo'
+                #all styles are now in assets/style.css
+            ),
+        ], id='app-header'),
+
+        # ----------------- SECTION 1: REVENUE -----------------
+        html.Div(
+            style={'display': 'flex', 'flex-wrap': 'wrap', 'align-items': 'center', 'justify-content': 'center'}, children=[
+            # Dropdown for month selection for the revenue graph
+            html.Div(style={'width': '93%', 'padding': '10px', 'minWidth': '300px', 'align-items': 'center', 'justify-content': 'center'}, children=[
+                dcc.Dropdown(
+                    id='month-dropdown',
+                    options=[
+                        {'label': 'All Months', 'value': 'all'},
+                        {'label': 'May', 'value': 'may'},
+                        {'label': 'June', 'value': 'june'},
+                        {'label': 'July', 'value': 'july'},
+                        {'label': 'August', 'value': 'august'},
+                        {'label': 'September', 'value': 'september'},
+                        {'label': 'October', 'value': 'october'}
+                    ],
+                    value='all',  # default value
+                    clearable=False,
+                    style={'marginBottom': '15px'})
+            ]),
+            html.Div(style={'width': '93%', 'padding': '10px', 'minWidth': '300px', 'align-items': 'center', 'justify-content': 'center'}, children=[
+                dcc.Graph(id="income-plot", figure=incomePlot)
+            ]),
+        ]),
+
+        # ----------------- SECTION 2: MEAT ESTIMATION & VARIANCE -----------------
+        html.H1(),
+        html.H1(),
+
+        # Sliders Container (3-Column Layout)
+        html.Div(
+            style={'display': 'flex', 'flex-wrap': 'wrap', 'align-content': 'center', 'justify-content': 'center', 'marginBottom': '20px', 'margin': 'auto'},
+            children=[
+                # Slider for beef
+                html.Div(style={'width': 'calc(33% - 20px)', 'minWidth': '200px', 'padding': '10px'}, children=[
+                    html.Label("Beef %", style={'fontWeight': 'bold'}),
+                    dcc.Slider(
+                        id='slider-beef', min=0.0, max=1.0, step=0.01, value=0.5,
+                        marks=None, tooltip={"always_visible": False, "placement": "bottom"},
+                    ),
+                ]),
+
+                # Slider for chicken
+                html.Div(style={'width': 'calc(33% - 20px)', 'minWidth': '200px', 'padding': '10px'}, children=[
+                    html.Label("Chicken %", style={'fontWeight': 'bold'}),
+                    dcc.Slider(
+                        id='slider-chicken', min=0.0, max=1.0, step=0.01, value=0.3,
+                        marks=None, tooltip={"always_visible": False, "placement": "bottom"},
+                    ),
+                ]),
+
+                # Slider for pork
+                html.Div(style={'width': 'calc(33% - 20px)', 'minWidth': '200px', 'padding': '10px'}, children=[
+                    html.Label("Pork %", style={'fontWeight': 'bold'}),
+                    dcc.Slider(
+                        id='slider-pork', min=0.0, max=1.0, step=0.01, value=0.2,
+                        marks=None, tooltip={"always_visible": False, "placement": "bottom"},
+                    ),
+                ]),
+            ]
+        ),
 
 
-    # Slider for beef
-    html.Label("Beef %"),
-    dcc.Slider(
-        id='slider-beef',
-        min=0.0,
-        max=1.0,
-        step=0.01,
-        value=0.5,
-        marks=None,
-        tooltip={"always_visible": False, "placement": "bottom"},
-    ),
 
-    # Slider for chicken
-    html.Label("Chicken %"),
-    dcc.Slider(
-        id='slider-chicken',
-        min=0.0,
-        max=1.0,
-        step=0.01,
-        value=0.3,
-        marks=None,
-        tooltip={"always_visible": False, "placement": "bottom"},
-    ),
+        # Beef and Chicken Variance Plots (Side-by-Side)
+        html.H3(),
+        html.Div(
+            style={'display': 'flex', 'flex-wrap': 'wrap', 'align-items': 'center', 'justify-content': 'center'},
+            children=[
+                html.Div(style={'width': '30%', 'padding': '10px', 'minWidth': '300px'}, children=[
+                    dcc.Graph(id="meat-estimation-plot", figure=meatEstimationPlot)
+                ]),
+                html.Div(style={'width': '30%', 'padding': '10px', 'minWidth': '300px'}, children=[
+                    dcc.Graph(id="beef-variance-plot", figure=beefVariancePlot)
+                ]),
+                html.Div(style={'width': '30%', 'padding': '10px', 'minWidth': '300px'}, children=[
+                    dcc.Graph(id="chicken-variance-plot", figure=chickenVariancePlot)
+                ]),
+            ]
+        ),
 
-    html.Label("Pork %"),
-    dcc.Slider(
-        id='slider-pork',
-        min=0.0,
-        max=1.0,
-        step=0.01,
-        value=0.3,
-        marks=None,
-        tooltip={"always_visible": False, "placement": "bottom"},
-    ),
 
-    dcc.Graph(id="meat-estimation-plot", figure=meatEstimationPlot),
-    dcc.Graph(id="beef-variance-plot", figure=beefVariancePlot),
-    dcc.Graph(id="chicken-variance-plot", figure=chickenVariancePlot),
-    dcc.Graph(id="ingredient-frequency-plot", figure=ingredientFrequencyPlot),
-    dcc.Graph(id="quantity-per-ingredient-plot", figure=quantityPerIngredientPlot),
-    dcc.Graph(id="top-selling-cats-plot", figure=topSellingCatsPlot),
-    dcc.Graph(id="top-revenue-cats-plot", figure=topRevenueCatsPlot)
+        # ----------------- SECTION 3: INGREDIENTS -----------------
+        html.H2(),
 
-])]
+        # Ingredient Frequency and Quantity Plots (Side-by-Side)
+        html.Div(
+            style={'display': 'flex', 'flex-wrap': 'wrap', 'align-items': 'center', 'justify-content': 'center'},
+            children=[
+                html.Div(style={'width': '46%', 'padding': '10px', 'minWidth': '300px'}, children=[
+                    dcc.Graph(id="ingredient-frequency-plot", figure=ingredientFrequencyPlot)
+                ]),
+                html.Div(style={'width': '46%', 'padding': '10px', 'minWidth': '300px'}, children=[
+                    dcc.Graph(id="quantity-per-ingredient-plot", figure=quantityPerIngredientPlot)
+                ]),
+            ]
+        ),
+
+
+        # ----------------- SECTION 4: OCTOBER SALES -----------------
+        html.H2(),
+
+        # October Top Selling and Top Revenue Plots (Side-by-Side)
+        html.Div(
+            style={'display': 'flex', 'flex-wrap': 'wrap', 'align-items': 'center', 'justify-content': 'center'},
+            children=[
+                html.Div(style={'width': '46%', 'padding': '10px', 'minWidth': '300px'}, children=[
+                    dcc.Graph(id="top-selling-cats-plot", figure=topSellingCatsPlot)
+                ]),
+                html.Div(style={'width': '46%', 'padding': '10px', 'minWidth': '300px'}, children=[
+                    dcc.Graph(id="top-revenue-cats-plot", figure=topRevenueCatsPlot)
+                ]),
+            ]
+        ),
+
+    ]
+)
+
+
+
+
+
+
+
 
 
 @app.callback(
