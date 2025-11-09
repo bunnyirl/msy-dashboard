@@ -6,7 +6,3 @@ DEPENDENCIES:
 
 - pandas
 - Plotly
-- seaborn
-- matplotlib
-- dash
-- jupyter-dash
