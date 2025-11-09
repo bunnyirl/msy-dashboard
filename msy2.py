@@ -1,3 +1,5 @@
+# Written by Jeremiah Johnson
+
 import pandas as pd
 import plotly.graph_objects as go
 import plotly.io as pio
@@ -9,7 +11,7 @@ chickenPercent = 0.2
 porkPercent = 0.2
 
 octoberDF = pd.read_csv("october.csv")
-shipmentDF = pd.read_csv("shipments.csv")
+shipmentDF = pd.read_csv("shipment.csv")
 ingredientDF = pd.read_csv("ingredients.csv")
 
 for idx, row in octoberDF.iterrows():
@@ -67,7 +69,8 @@ fig1.update_layout(
     xaxis_title="Meat",
     yaxis_title="Meat Sold (lbs)"
 )
-fig1.write_image("meatsold.png", scale=3)
+# fig1.write_image("meatsold.png", scale=3)
+fig1.show()
 
 labelsBeef = ["Purchased Beef", "Sold Beef"]
 valuesBeef = [beefPurchasedLbsMonthly, beefLbsSold]
@@ -82,7 +85,8 @@ fig2.update_layout(
     yaxis_title="Beef (lbs)"
 )
 
-fig2.write_image("beefvariance.png", scale=3)
+# fig2.write_image("beefvariance.png", scale=3)
+fig2.show()
 
 labelsChicken = ["Purchased Chicken", "Sold Chicken"]
 valuesChicken = [chickenPurchasedLbsMonthly, chickenLbsSold]
@@ -98,4 +102,5 @@ fig3.update_layout(
 )
 
 
-fig3.write_image("chickenvariance.png", scale=3)
+# fig3.write_image("chickenvariance.png", scale=3)
+fig3.show()
