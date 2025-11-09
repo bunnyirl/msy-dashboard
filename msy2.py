@@ -8,7 +8,7 @@ beefPercent = 0.6
 chickenPercent = 0.2
 porkPercent = 0.2
 
-octoberDF = pd.read_csv("October_Data_Matrix.csv")
+octoberDF = pd.read_csv("october.csv")
 shipmentDF = pd.read_csv("shipments.csv")
 ingredientDF = pd.read_csv("ingredients.csv")
 
@@ -96,5 +96,6 @@ fig3.update_layout(
     xaxis_title="Category",
     yaxis_title="Chicken (lbs)"
 )
+
 
 fig3.write_image("chickenvariance.png", scale=3)
