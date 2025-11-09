@@ -1,0 +1,44 @@
+/* This file goes in the 'assets' folder.
+  It defines the "before" and "after" scroll styles.
+*/
+
+#app-header {
+  /* Positioning */
+  position: sticky; /* Makes the header "stick" to the top */
+  top: 0;
+  z-index: 10;
+  
+  /* Initial State (Large, Centered) */
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center;
+  padding: 20px 10px; /* More padding when large */
+  background-color: white; /* Needs a background to hide content scrolling under it */
+  border-bottom: 1px solid #eee; /* A subtle separator line */
+
+  /* Smooth transition for padding */
+  transition: padding 0.3s ease-in-out;
+}
+
+#app-logo {
+  /* Initial State (Large) */
+  height: 80px; /* Larger initial height */
+  width: auto;
+
+  /* Smooth transition for size change */
+  transition: height 0.3s ease-in-out;
+}
+
+/* --- SCROLLED STATE --- */
+/* This style applies when the 'scrolled' class is added by JavaScript */
+
+#app-header.scrolled {
+  /* Scrolled State (Small, Left) */
+  justify-content: flex-start; /* Move to the left */
+  padding: 5px 10px; /* Less padding when small */
+}
+
+#app-logo.scrolled {
+  /* Scrolled State (Small) */
+  height: 40px; /* Minimized height */
+}
