@@ -1,0 +1,60 @@
+@font-face {
+    font-family: 'Visby Round';
+
+    /* 1. Make sure this file name matches your .otf file EXACTLY.
+       2. Change the format to 'opentype'.
+    */
+    src: url('fonts/VisbyRoundCF-Regular.otf') format('opentype');
+
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* --- Optional: Define the BOLD weight --- */
+@font-face {
+    font-family: 'Visby Round';
+
+    /* Make sure this file name is also correct */
+    src: url('fonts/VisbyRoundCF-Bold.otf') format('opentype');
+
+    font-weight: bold;
+    font-style: normal;
+}
+
+#app-header {
+    /* positioning */
+    position: sticky; /* makes the header stay at the top */
+    top: 0;
+    z-index: 10;
+
+    /* initial */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 10px;
+    background-color: white;
+    border-bottom: 1px solid #eee;
+
+    transition: padding 0.3s ease-in-out, justify-content 0.3s ease-in-out;
+}
+
+#app-logo {
+    /* initial state */
+    height: 80px;
+    width: auto;
+
+    /* transition for size change */
+    transition: height 0.3s ease-in-out;
+}
+
+/* --- SCROLLED STATE --- */
+#app-header.scrolled {
+    /* scrolled state*/
+    justify-content: flex-start; /* move to the left */
+    padding: 5px 10px;
+}
+
+#app-logo.scrolled {
+    /* Scrolled State (Small) */
+    height: 40px; /* Minimized height */
+}
