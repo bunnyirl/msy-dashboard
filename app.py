@@ -30,26 +30,18 @@ incomePlot = createRevenuePlot(month_sources)
  topRevenueCatsPlot) = createOctoberPlots()
 
 
-# WEBSITE LAYOUT
-# app.layout = [html.Div([
-#     # Header
-#     html.H1("Mai Shan Yun Dashboard"),
-
-# WEBSITE LAYOUT
+#website layout
 app.layout = [html.Div([
-    # === START OF MODIFIED HEADER ===
-    # This Div will be controlled by assets/style.css and assets/script.js
+    #this Div will be controlled by assets/style.css and assets/script.js
     html.Div([
-        # Add the logo using html.Img.
-        # The 'src' path points to the 'assets' folder you created.
+        #add the logo using html.Img.
         html.Img(
             src='/assets/麦_画板-1.png',
-            id='app-logo' # Add ID for CSS/JS
-            # All styles are now in assets/style.css
+            id='app-logo'
+            #all styles are now in assets/style.css
         ),
-    ], id='app-header'), # Add ID for CSS/JS
-    # === END OF MODIFIED HEADER ===
-
+    ], id='app-header'), 
+  
     # Dropdown for month selection for the revenue graph
     dcc.Dropdown(
         id='month-dropdown',
@@ -183,5 +175,6 @@ def update_plots(beef_val, chicken_val, pork_val):
 
 if __name__ == '__main__':
     app.run(debug=True)
+
 
 
