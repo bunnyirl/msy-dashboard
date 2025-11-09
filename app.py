@@ -31,9 +31,34 @@ incomePlot = createRevenuePlot(month_sources)
 
 
 # WEBSITE LAYOUT
+# app.layout = [html.Div([
+#     # Header
+#     html.H1("Mai Shan Yun Dashboard"),
+
+# WEBSITE LAYOUT
 app.layout = [html.Div([
-    # Header
-    html.H1("Mai Shan Yun Dashboard"),
+    # === START OF ADDED HEADER ===
+    # This Div acts as a flex container to hold the logo and title side-by-side
+    html.Div([
+        # Add the logo using html.Img.
+        # The 'src' path points to the 'assets' folder you created.
+        html.Img(
+            src='/assets/麦_画板-1.png',
+            style={
+                'height': '60px',  # You can adjust the height
+                'width': 'auto',
+                'margin-right': '15px',
+                'vertical-align': 'middle'
+            }
+        ),
+        # Header text
+        html.H1("Mai Shan Yun Dashboard", style={'vertical-align': 'middle'})
+    ], style={
+        'display': 'flex',        # Use flexbox for alignment
+        'align-items': 'center',  # Vertically center items in the header
+        'padding': '10px'         # Add some padding around the header
+    }),
+    # === END OF ADDED HEADER ===
 
     # Dropdown for month selection for the revenue graph
     dcc.Dropdown(
@@ -168,3 +193,4 @@ def update_plots(beef_val, chicken_val, pork_val):
 
 if __name__ == '__main__':
     app.run(debug=True)
+
