@@ -2,12 +2,12 @@ import pandas as pd
 import plotly.express as px
 import os
 
-month_sources = ["Data/may.csv",
-                 "Data/june.csv",
-                 "Data/july.csv",
-                 "Data/august.csv",
-                 "Data/september.csv",
-                 "Data/october.csv",]
+month_sources = ["may.csv",
+                 "june.csv",
+                 "july.csv",
+                 "august.csv",
+                 "september.csv",
+                 "october.csv",]
 
 
 # Defining lists of months and their
