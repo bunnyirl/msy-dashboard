@@ -1,15 +1,18 @@
+# Written by Jeremiah Johnson
+# Formatted by Kyle Berzett
+
 import pandas as pd
-import plotly.graph_objects as go
+import plotly.express as px
 import plotly.io as pio
 import os
 from typing import List, Optional
 
 # Created by Jeremiah Johnson
 
-def meatVarianceCharts(beefPercent,
-                       chickenPercent,
-                       porkPercent,
-                       month_sources: Optional[List[str]] = None):
+def createMeatPlots(beefPercent,
+                    chickenPercent,
+                    porkPercent,
+                    month_sources: Optional[List[str]] = None):
 
     pio.templates.default = "plotly_white"
 
@@ -20,9 +23,6 @@ def meatVarianceCharts(beefPercent,
 
     meatItems = ["Tossed Rice Noodle", "Tossed Ramen", "Ramen", "Rice Noodle"]
 
-    beefCount = 0
-    chickenCount = 0
-    porkCount = 0
     totalCount = 0
 
     friedRiceCount = 0
@@ -62,9 +62,7 @@ def meatVarianceCharts(beefPercent,
     meatValues = [beefLbsSold, chickenLbsSold, porkLbsSold]
     meatLabels = ["Beef", "Chicken", "Pork"]
 
-    fig1 = go.Figure(data=[
-        go.Bar(x=meatLabels, y=meatValues, marker_color=['red', 'orange', 'pink'])
-    ])
+    fig1 = px.pie(values=meatValues, labels=meatLabels, color=meatLabels)
 
     fig1.update_layout(
         title="Estimated Meat Sold (lbs)",
@@ -75,9 +73,8 @@ def meatVarianceCharts(beefPercent,
     labelsBeef = ["Purchased Beef", "Sold Beef"]
     valuesBeef = [beefPurchasedLbsMonthly, beefLbsSold]
 
-    fig2 = go.Figure(data=[
-        go.Bar(x=labelsBeef, y=valuesBeef, marker_color=['red', 'blue'])
-    ])
+    fig2 = px.bar(x=labelsBeef, y=valuesBeef, color=labelsBeef)
+
 
     fig2.update_layout(
         title="Beef Variance Visualization (lbs)",
@@ -88,9 +85,7 @@ def meatVarianceCharts(beefPercent,
     labelsChicken = ["Purchased Chicken", "Sold Chicken"]
     valuesChicken = [chickenPurchasedLbsMonthly, chickenLbsSold]
 
-    fig3 = go.Figure(data=[
-        go.Bar(x=labelsChicken, y=valuesChicken, marker_color=['green', 'orange'])
-    ])
+    fig3 = px.bar(x=labelsChicken, y=valuesChicken, color=labelsChicken)
 
     fig3.update_layout(
         title="Chicken Variance Visualization (lbs)",
@@ -98,9 +93,9 @@ def meatVarianceCharts(beefPercent,
         yaxis_title="Chicken (lbs)"
     )
 
-    # fig 1 is meat sold per type
-    # fig 2 shows surplus/deficit in beef
-    # fig 3 shows surplus/deficit in chicken
-    # beefVariance is surplus/deficit of beef in lbs
-    # chickenVariance is surplus/deficot of chicken in lbs
+    # fig 1 (plot) is meat sold per type
+    # fig 2 (plot) shows surplus/deficit in beef
+    # fig 3 (plot) shows surplus/deficit in chicken
+    # beefVariance (image) is surplus/deficit of beef in lbs
+    # chickenVariance (image) is surplus/deficit of chicken in lbs
     return fig1, fig2, fig3, beefVariance, chickenVariance

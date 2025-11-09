@@ -1,4 +1,5 @@
 # Written by Kyle Berzett
+# Formatted by Kyle Berzett
 
 import os
 import pandas as pd
@@ -6,10 +7,9 @@ import plotly.express as px
 from plotly.graph_objs import Figure
 from typing import List, Optional
 
-
-def createIncomeBarChart(
+def createRevenuePlot(
     month_sources: Optional[List[str]] = None,
-    title: str = "Various Income Totals from May to October"
+    title: str = "Various Revenue Totals from May to October"
     )-> Figure:
 
     base_dir = os.path.dirname(__file__)
@@ -51,33 +51,34 @@ def createIncomeBarChart(
                 elif paymentGroup == 'All Day Menu':
                     allDayMenuMonthlyIncomes.append(income)
 
+
+        # Special addition accounting for October since it has
+        # no determinable lunch menu or all-day menu incomes,
+        # so we claim its individual incomes are zero
+        if 'october' in source:
+            lunchMenuMonthlyIncomes.append(0)
+            allDayMenuMonthlyIncomes.append(0)
+
+
         # Adds the gross income to the list of monthly incomes as
         # well as the name of the month for clarity in the graph
         grossMonthlyIncomes.append(grossMonthlyIncome)
         months.append(os.path.splitext(os.path.basename(source))[0].capitalize())
 
 
-    # Special addition accounting for October since it has
-    # no determinable lunch menu or all-day menu incomes,
-    # so we claim its individual incomes are zero
-    lunchMenuMonthlyIncomes.append(0)
-    allDayMenuMonthlyIncomes.append(0)
-
-
-
     # Creates a database of the months and their incomes
     # df_income = pd.DataFrame({"Month": months, "Total Monthly Income": allDayMenuMonthlyIncomes})
     # df_income = pd.DataFrame({"Month": months, "Total Monthly Income": lunchMenuMonthlyIncomes})
     df_income = pd.DataFrame({"Month": months,
-                              "Gross Monthly Income": grossMonthlyIncomes,
-                              "Lunch Menu Income": lunchMenuMonthlyIncomes,
-                              "All-Day Menu Income": allDayMenuMonthlyIncomes})
+                              "Gross Monthly Revenue": grossMonthlyIncomes,
+                              "Lunch Menu Revenue": lunchMenuMonthlyIncomes,
+                              "All-Day Menu Revenue": allDayMenuMonthlyIncomes})
 
     incomeGraph = px.bar(df_income,
                          x="Month",
-                         y=["Lunch Menu Income", "All-Day Menu Income", "Gross Monthly Income"],
+                         y=["Lunch Menu Revenue", "All-Day Menu Revenue", "Gross Monthly Revenue"],
                          barmode='group')
 
-    incomeGraph.update_layout(title=dict(text="Various Income Totals from May to October", font=dict(size=24)))
+    incomeGraph.update_layout(title=dict(text=title, font=dict(size=24)))
 
     return incomeGraph
